@@ -43,6 +43,8 @@ foreach(i = vec) %dopar% {
 ```
 
 ```{r foreach-solution}
+### SOLUTION ###
+
 library(foreach)
 library(doParallel)
 registerDoParallel(3)
@@ -56,20 +58,12 @@ system.time({
 ```{r foreach-check}
 # debug_this()
 grade_this({
-  # fail_if(!"future_walk" %in% .user_code)
+  fail_if(!"registerDoParallel" %in% .solution_code)
   pass_if(.result["elapsed"] < 3)
   grade_this_code(action = "fail")
   fail()
 })
 ```
-
-<!-- <div id="foreach-hint-1"> -->
-<!-- You might want to limit the amount of cores used instead of using all available. -->
-<!-- </div> -->
-
-<!-- <div id="foreach-hint-2"> -->
-<!-- You need to define a parallel cluster using {doParallel} to register your workers. -->
-<!-- </div> -->
 
 ## foreach and doFuture
 
@@ -107,6 +101,7 @@ system.time({
 
 ```{r doFuture-check}
 grade_this({
+  fail_if(!"registerDoFuture" %in% .solution_code)
   pass_if(.result["elapsed"] < 3)
   grade_this_code(action = "fail")
   fail()

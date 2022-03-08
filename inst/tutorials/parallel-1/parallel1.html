@@ -11,7 +11,7 @@
 
 
 <meta name="progressive" content="true" />
-<meta name="allow-skip" content="false" />
+<meta name="allow-skip" content="true" />
 <meta name="learnr-version-prerender" content="0.10.1.9019" />
 
 <title>Efficient R and Parallelization - 1</title>
@@ -145,7 +145,9 @@ foreach(i = vec) %dopar% {
 <div class="tutorial-exercise-support" data-label="foreach-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0">
-<pre class="text"><code>library(foreach)
+<pre class="text"><code>### SOLUTION ###
+
+library(foreach)
 library(doParallel)
 registerDoParallel(3)
 system.time({
@@ -154,12 +156,6 @@ system.time({
   }
 })</code></pre>
 </div>
-<!-- <div id="foreach-hint-1"> -->
-<!-- You might want to limit the amount of cores used instead of using all available. -->
-<!-- </div> -->
-<!-- <div id="foreach-hint-2"> -->
-<!-- You need to define a parallel cluster using {doParallel} to register your workers. -->
-<!-- </div> -->
 </div>
 <div id="section-foreach-and-dofuture" class="section level2">
 <h2>foreach and doFuture</h2>
@@ -182,7 +178,7 @@ system.time({
 <div class="tutorial-exercise-support" data-label="doFuture-hint-1"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0">
-<pre class="text"><code>You do not need to register a cluster this time - use the {future} way of going parallel</code></pre>
+<pre class="text"><code>After registering the future cluster, do not forget to initialize a {future} plan</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="doFuture-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
@@ -243,12 +239,13 @@ learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library
         opts = list(label = "\"foreach\"", exercise = "TRUE", 
             eval = "FALSE"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure(c("# debug_this()", 
-    "grade_this({", "  # fail_if(!\"future_walk\" %in% .user_code)", 
-    "  pass_if(.result[\"elapsed\"] < 3)", "  grade_this_code(action = \"fail\")", 
-    "  fail()", "})"), chunk_opts = list(label = "foreach-check")), 
-    solution = structure(c("library(foreach)", "library(doParallel)", 
-    "registerDoParallel(3)", "system.time({", "  foreach(i = vec) %dopar% {", 
-    "    Sys.sleep(i)", "  }", "})"), chunk_opts = list(label = "foreach-solution")), 
+    "grade_this({", "  # fail_if(!\"registerDoParallel\" %in% .solution_code)", 
+    "  # fail_if(!\"future_walk\" %in% .user_code)", "  pass_if(.result[\"elapsed\"] < 3)", 
+    "  grade_this_code(action = \"fail\")", "  fail()", "})"), chunk_opts = list(
+        label = "foreach-check")), solution = structure(c("### SOLUTION ###", 
+    "", "library(foreach)", "library(doParallel)", "registerDoParallel(3)", 
+    "system.time({", "  foreach(i = vec) %dopar% {", "    Sys.sleep(i)", 
+    "  }", "})"), chunk_opts = list(label = "foreach-solution")), 
     test_cases = NULL, options = list(eval = FALSE, echo = TRUE, 
         results = "markup", tidy = FALSE, tidy.opts = NULL, collapse = FALSE, 
         prompt = FALSE, comment = NA, highlight = FALSE, size = "normalsize", 
