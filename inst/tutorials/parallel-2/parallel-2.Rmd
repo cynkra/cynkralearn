@@ -1,0 +1,42 @@
+---
+title: "Efficient R and Parallelization - 1"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+gradethis_setup()
+```
+
+This function finishes in a little bit more than **two seconds** in parallel (due to the overhead setting up the parallel workers and collecting the results) and in about six seconds sequentially.
+
+Change it so that it runs in parallel using `furrr::future_walk()` and a parallel {future} plan of your choice
+
+```{r furrr, exercise=TRUE, eval=FALSE}
+system.time({
+  vec = c(2, 2, 2)
+  lapply(vec, Sys.sleep)
+})
+```
+
+```{r furrr-solution}
+library(furrr)
+vec = c(2, 2, 2)
+plan(multisession)
+system.time({
+  future_walk(vec, Sys.sleep)
+})
+```
+
+```{r furrr-check}
+# debug_this()
+grade_this({
+  # fail_if(!"future_walk" %in% .user_code)
+  pass_if(.result["elapsed"] < 3)
+  grade_this_code(action = "fail")
+  fail()
+})
+```
+

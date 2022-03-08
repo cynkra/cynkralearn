@@ -1,0 +1,19 @@
+Package: cynkralearn
+Title: learnr exercises by cynkra
+Version: 0.0.0.9000
+Authors@R: 
+    person("Patrick", "Schratz", , "patrick.schratz@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-0748-6624"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Imports: 
+    gradethis (>= 0.2.5.9000),
+    learnr (>= 0.10.1.9019)
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Remotes:  
+    rstudio/gradethis

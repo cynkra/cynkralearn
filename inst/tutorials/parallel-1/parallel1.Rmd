@@ -1,0 +1,114 @@
+---
+title: "Efficient R and Parallelization - 1"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+gradethis_setup()
+```
+
+## foreach and doParallel
+
+This function finishes in a little bit more than **two seconds** in parallel (due to the overhead setting up the parallel workers and collecting the results) and in about six seconds sequentially.
+
+Change it so that it runs in parallel using `foreach()` and the parallel adaptor from the `doParallel` package.
+
+```{r foreach, exercise=TRUE, eval=FALSE}
+vec = c(2, 2, 2)
+system.time({
+  for (i in vec) {
+    Sys.sleep(i)
+  }
+})
+```
+
+```{r foreach-hint-1, eval=FALSE}
+[...]
+# register the parallel backend
+registerDoParallel(<cores>)
+[...]
+```
+
+```{r foreach-hint-2, eval=FALSE}
+[...]
+# register the parallel backend
+foreach(i = vec) %dopar% {
+[...]
+```
+
+```{r foreach-solution}
+library(foreach)
+library(doParallel)
+registerDoParallel(3)
+system.time({
+  foreach(i = vec) %dopar% {
+    Sys.sleep(i)
+  }
+})
+```
+
+```{r foreach-check}
+# debug_this()
+grade_this({
+  # fail_if(!"future_walk" %in% .user_code)
+  pass_if(.result["elapsed"] < 3)
+  grade_this_code(action = "fail")
+  fail()
+})
+```
+
+<!-- <div id="foreach-hint-1"> -->
+<!-- You might want to limit the amount of cores used instead of using all available. -->
+<!-- </div> -->
+
+<!-- <div id="foreach-hint-2"> -->
+<!-- You need to define a parallel cluster using {doParallel} to register your workers. -->
+<!-- </div> -->
+
+## foreach and doFuture
+
+This function finishes in a little bit more than **two seconds** in parallel (due to the overhead setting up the parallel workers and collecting the results) and in about six seconds sequentially.
+
+Change it so that it runs in parallel using `foreach()` and the parallel adaptor from the `doFuture` package.
+
+```{r doFuture, exercise=TRUE, eval=FALSE}
+vec = c(2, 2, 2)
+system.time({
+  for (i in vec) {
+    Sys.sleep(i)
+  }
+})
+```
+
+```{r doFuture-hint-1, eval=FALSE, results='asis'}
+After registering the future cluster, do not forget to initialize a {future} plan
+```
+
+```{r doFuture-solution, eval=FALSE}
+library(foreach)
+library(doFuture)
+vec = c(2, 2, 2)
+
+registerDoFuture()
+plan(multisession, workers = 3)
+
+system.time({
+  foreach(i = vec) %dopar% {
+    Sys.sleep(i)
+  }
+})
+```
+
+```{r doFuture-check}
+grade_this({
+  pass_if(.result["elapsed"] < 3)
+  grade_this_code(action = "fail")
+  fail()
+})
+```
