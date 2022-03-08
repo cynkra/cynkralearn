@@ -24,7 +24,7 @@ The goal of cynkralearn is to ...
 
 You can install the development version of cynkralearn like so:
 
-``` r
+```r
 remotes::install_github("cynkra/cynkralearn")
 ```
 
@@ -32,7 +32,7 @@ remotes::install_github("cynkra/cynkralearn")
 
 List all available tutorials
 
-```{r}
+```{r, eval=FALSE}
 library(learnr)
 available_tutorials(package = "cynkralearn")
 ```

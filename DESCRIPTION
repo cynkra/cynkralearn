@@ -15,5 +15,7 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Remotes:  
+Remotes: 
     rstudio/gradethis
+URL: https://github.com/pat-s/cynkralearn
+BugReports: https://github.com/pat-s/cynkralearn/issues
